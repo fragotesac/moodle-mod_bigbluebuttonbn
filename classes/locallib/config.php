@@ -210,6 +210,12 @@ class config {
         }
     }
 
+    public static function setCurrentBBBServer($serverName, $serverUrl, $serverSharedSecret) {
+        self::setCurrentServer($serverName);
+        self::setCurrentServerUrl($serverUrl);
+        self::setCurrentServerSharedSecret($serverSharedSecret);
+    }
+
     public static function setCurrentServerUrl($serverUrl) {
         set_config('bigbluebuttonbn_server_url', $serverUrl, '');
     }

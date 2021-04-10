@@ -50,9 +50,21 @@ class mod_bigbluebuttonbn_mod_form extends moodleform_mod {
         // Validates if the BigBlueButton server is running.
         $serverversion = bigbluebuttonbn_get_server_version();
         if (is_null($serverversion)) {
-            print_error('general_error_unable_connect', 'bigbluebuttonbn',
-                $CFG->wwwroot.'/admin/settings.php?section=modsettingbigbluebuttonbn');
-            return;
+            // search active server
+            $cluster = \mod_bigbluebuttonbn\locallib\config::getCluster();
+            foreach ($cluster as $server => $credential) {
+                \mod_bigbluebuttonbn\locallib\config::setCurrentBBBServer($server, $credential->server_url, $credential->shared_secret);
+                $serverversion = bigbluebuttonbn_get_server_version();
+                if (!is_null($serverversion)) {
+                    break;
+                }
+            }
+
+            if (is_null($serverversion)) {
+                print_error('general_error_unable_connect', 'bigbluebuttonbn',
+                    $CFG->wwwroot.'/admin/settings.php?section=modsettingbigbluebuttonbn');
+                return;
+            }
         }
         $bigbluebuttonbn = null;
         if ($this->current->id) {
