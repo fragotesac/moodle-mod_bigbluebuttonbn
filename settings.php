@@ -81,9 +81,7 @@ if ($hassiteconfig) {
                 if (!empty($serverName) && !empty($serverUrl) && !empty($serverSharedSecret)) {
                     // set current bbb server, first time
                     if (get_config('', 'bigbluebuttonbn_server') === false) {
-                        \mod_bigbluebuttonbn\locallib\config::setCurrentServer($serverName);
-                        \mod_bigbluebuttonbn\locallib\config::setCurrentServerUrl($serverUrl);
-                        \mod_bigbluebuttonbn\locallib\config::setCurrentServerSharedSecret($serverSharedSecret);
+                        \mod_bigbluebuttonbn\locallib\config::setCurrentBBBServer($serverName, $serverUrl, $serverSharedSecret);
                     }
 
                     $cluster[$serverName] = [
